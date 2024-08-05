@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 const Card = ({ name, onChange }) => {
     const [pokemon, setPokemon] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async() => {
@@ -14,13 +15,16 @@ const Card = ({ name, onChange }) => {
                 const data = await response.json();
                 setPokemon(data);
             } catch (error) {
-                console.log(data);
-                console.log('break')
                 console.log(error);
+                setError('Failed to load data');
             }
         }
         fetchData();
     }, [name]);
+
+    if (error) {
+        return (<div>Error: {error}</div>)
+    }
 
     if (!pokemon) {
         return (<div>pokemon not available</div>);

@@ -12,9 +12,10 @@ const Card = ({ name, onChange }) => {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                console.log(data);
                 setPokemon(data);
             } catch (error) {
+                console.log(data);
+                console.log('break')
                 console.log(error);
             }
         }

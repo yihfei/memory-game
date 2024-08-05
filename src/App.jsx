@@ -12,24 +12,32 @@ function App() {
   const [currentScore, setCurrentScore] = useState(-1);
 
   useEffect(() => {
-    const fetchPokemonList = async () => {
+    const fetchPokemonList = async (retries = 3) => {
       try {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20');
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=30');
         if (!response.ok) {
           throw new Error('Network response was not ok');        
         }
-          const data = await response.json();
-          const names = data.results.map(pokemon => pokemon.name);
-
-          setPokemonNames(names);
-          
+        const text = await response.text();
+        console.log('Response Text:', text);
+        
+        // Try to parse JSON
+        const data = JSON.parse(text);
+        const names = data.results.map(pokemon => pokemon.name);
+        setPokemonNames(names);
+        
       } catch (error) {
-        console.log(error);
+        if (retries > 0) {
+          console.log(`Retrying... (${retries} attempts left)`);
+          fetchPokemonList(retries - 1);
+        } else {
+          console.log('Error:', error);
+        }
       } 
     };
     fetchPokemonList();
-    
-  }, [])
+  }, []);
+  
 
   useEffect(() => {
     setPokemonCards(pokemonNames.map(name => (

@@ -39,9 +39,7 @@ function App() {
     )).filter(card => card !== null);
     
 
-    setPokemonCards(pokemonNames.map(name => (
-      <Card name={name} onChange={onChange} key={name} />
-    )));
+    setPokemonCards(cards);
 
   }, [pokemonNames]);
 
@@ -55,9 +53,6 @@ function App() {
     }
   }, [selectedNames]);
 
-  const increaseScore = () => {
-    setCurrentScore(prevScore => prevScore + 1);
-  }
 
   const getRandomPokemonCards = (cards, count) => {
     // Shuffle the array

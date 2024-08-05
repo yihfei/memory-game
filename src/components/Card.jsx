@@ -23,7 +23,7 @@ const Card = ({ name, onChange }) => {
     }, [name]);
 
     if (error) {
-        return (<div>Error: {error}</div>)
+        return null;
     }
 
     if (!pokemon) {

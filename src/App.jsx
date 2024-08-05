@@ -34,34 +34,16 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const fetchAndSetPokemonCards = async () => {
-      const cardPromises = pokemonNames.map(async (name) => {
-        try {
-          // Fetch Pokemon data to validate the name
-          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          // If the fetch is successful, return the card component
-          return <Card name={name} onChange={onChange} key={name} />;
-        } catch (error) {
-          // Log the error and return null if there's an issue
-          console.error(`Failed to fetch data for ${name}:`, error);
-          return null;
-        }
-      });
+    let cards = pokemonNames.map(name => (
+      <Card name={name} onChange={onChange} key={name} />
+    )).filter(card => card !== null);
+    
 
-      // Wait for all card promises to resolve
-      const cardsWithStatus = await Promise.all(cardPromises);
+    setPokemonCards(pokemonNames.map(name => (
+      <Card name={name} onChange={onChange} key={name} />
+    )));
 
-      // Filter out null values (failed fetches) from the cards array
-      setPokemonCards(cardsWithStatus.filter(card => card !== null));
-    };
-
-    if (!loading) {
-      fetchAndSetPokemonCards();
-    }
-  }, [pokemonNames, loading]);
+  }, [pokemonNames]);
 
   useEffect(() => {
     if (new Set(selectedNames).size !== selectedNames.length) {

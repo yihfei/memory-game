@@ -9,12 +9,12 @@ function App() {
   const [pokemonCards, setPokemonCards] = useState([]);
   const [selectedNames, setSelectedNames] = useState([]);
   const [bestScore, setBestScore] = useState(0);
-  const [currentScore, setCurrentScore] = useState(0);
+  const [currentScore, setCurrentScore] = useState(-1);
 
   useEffect(() => {
     const fetchPokemonList = async () => {
       try {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20');
         if (!response.ok) {
           throw new Error('Network response was not ok');        
         }
@@ -22,9 +22,7 @@ function App() {
           const names = data.results.map(pokemon => pokemon.name);
 
           setPokemonNames(names);
-          setPokemonCards(pokemonNames.map(name => (
-            <Card name={name} onChange={onChange} key={name} />
-          )))
+          
       } catch (error) {
         console.log(error);
       } 
@@ -33,7 +31,26 @@ function App() {
     
   }, [])
 
-  
+  useEffect(() => {
+    setPokemonCards(pokemonNames.map(name => (
+      <Card name={name} onChange={onChange} key={name} />
+    )));
+
+  }, [pokemonNames]);
+
+  useEffect(() => {
+    if (new Set(selectedNames).size !== selectedNames.length) {
+      setBestScore(Math.max(currentScore, bestScore));
+      setCurrentScore(-1);
+      setSelectedNames([]);
+    } else {
+      setCurrentScore(currentScore + 1);      
+    }
+  }, [selectedNames]);
+
+  const increaseScore = () => {
+    setCurrentScore(prevScore => prevScore + 1);
+  }
 
   const getRandomPokemonCards = (cards, count) => {
     // Shuffle the array
@@ -42,16 +59,24 @@ function App() {
     return shuffled.slice(0, count);
   };
 
+
   const onChange = (name) => {
-    setPokemonNames([...pokemonNames, name])
+    setSelectedNames(prevSelectedNames => [...prevSelectedNames, name]);
   }
 
   const randomCards = getRandomPokemonCards(pokemonCards, 10);
 
   return (
-    <div className="cards">
-      {randomCards}
-    </div>
+    <>
+      <header>
+        <h2>best score: {bestScore}</h2>
+        <h2>current score: {currentScore}</h2>
+      </header>
+      <div className="cards">
+        {randomCards.length > 0 ? randomCards : <p>Loading cards...</p>}
+      </div>
+    </>
+    
   )
 }
 

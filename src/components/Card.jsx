@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const Card = ({ name }) => {
+const Card = ({ name, onChange }) => {
     const [pokemon, setPokemon] = useState(null);
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const Card = ({ name }) => {
     const imgURL = pokemon.sprites.other['official-artwork'].front_default;
 
     return (
-        <div className="card">
+        <div className="card" onClick={onChange}>
             <h2>{name}</h2>
             <img src={imgURL} alt="" />
         </div>

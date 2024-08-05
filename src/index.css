@@ -7,15 +7,16 @@ body {
   justify-content: center;
   box-sizing: border-box;
   overflow-y: hidden;
-
+  font-family: 'VT323', Arial, Helvetica, sans-serif;
+  background-color: #E6E6FA;
 }
 
 .card {
-  border: 8px solid rgb(245, 236, 0);
+  border: 8px solid rgb(255, 247, 0);
   max-height: 300px;
   max-width: 200px;
   background-color: rgb(99, 221, 255);
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .card img {
@@ -33,4 +34,8 @@ body {
   grid-template-columns: repeat(5, 1fr);
   margin: 0px;
   gap: 10px;
+}
+
+header {
+  padding: 5px 15px;
 }

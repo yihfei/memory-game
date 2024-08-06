@@ -1,5 +1,5 @@
 # Memory Game
-![preview]('./src/assets/preview.jpg)
+![preview](./src/assets/preview.jpg)
 A pokemon-themed memory game where players select different Pokémon cards without repeating any card. The goal is to achieve the highest score by selecting as many unique cards as possible.
 
 ## Features

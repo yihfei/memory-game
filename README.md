@@ -1,8 +1,10 @@
-# React + Vite
+# Memory Game
+![preview]('./src/assets/preview.jpg)
+A pokemon-themed memory game where players select different Pokémon cards without repeating any card. The goal is to achieve the highest score by selecting as many unique cards as possible.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
+- Fetches real-time Pokémon data from the PokéAPI
+- Responsive card layout
+- Tracks current and best scores
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+live app at: [poke-recall](https://poke-recall.netlify.app/)

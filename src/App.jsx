@@ -31,26 +31,13 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const fetchCards = async () => {
-      const cardPromises = pokemonNames.map(async (name) => {
-        try {
-          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return { name, card: <Card name={name} onChange={onChange} key={name} /> };
-        } catch (error) {
-          console.error(`Failed to fetch data for ${name}:`, error);
-          return { name, card: null };
-        }
-      });
+    let cards = pokemonNames.map(name => (
+      <Card name={name} onChange={onChange} key={name} onError={handleCardError} />
+    )).filter(card => card !== null);
+    
 
-      const results = await Promise.all(cardPromises);
-      const validCards = results.filter(item => item.card !== null).map(item => item.card);
-      setPokemonCards(validCards);
-    };
-
-    fetchCards();
+    setPokemonCards(cards);
+    console.log(pokemonCards.length);
   }, [pokemonNames]);
 
   useEffect(() => {
@@ -64,10 +51,12 @@ function App() {
   }, [selectedNames]);
 
 
+  const handleCardError = (name) => {
+    setPokemonNames((prevNames) => prevNames.filter((n) => n !== name));
+  };
+
   const getRandomPokemonCards = (cards, count) => {
-    // Shuffle the array
     const shuffled = cards.sort(() => 0.5 - Math.random());
-    // Get the first `count` elements from the shuffled array
     return shuffled.slice(0, count);
   };
 

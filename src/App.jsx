@@ -10,7 +10,6 @@ function App() {
   const [selectedNames, setSelectedNames] = useState([]);
   const [bestScore, setBestScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(-1);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPokemonList = async () => {
@@ -23,10 +22,8 @@ function App() {
           const names = data.results.map(pokemon => pokemon.name);
 
           setPokemonNames(names);
-          setLoading(false); 
       } catch (error) {
         console.log(error);
-        setLoading(false); 
       } 
     };
     fetchPokemonList();
@@ -34,13 +31,26 @@ function App() {
   }, [])
 
   useEffect(() => {
-    let cards = pokemonNames.map(name => (
-      <Card name={name} onChange={onChange} key={name} />
-    )).filter(card => card !== null);
-    
+    const fetchCards = async () => {
+      const cardPromises = pokemonNames.map(async (name) => {
+        try {
+          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return { name, card: <Card name={name} onChange={onChange} key={name} /> };
+        } catch (error) {
+          console.error(`Failed to fetch data for ${name}:`, error);
+          return { name, card: null };
+        }
+      });
 
-    setPokemonCards(cards);
+      const results = await Promise.all(cardPromises);
+      const validCards = results.filter(item => item.card !== null).map(item => item.card);
+      setPokemonCards(validCards);
+    };
 
+    fetchCards();
   }, [pokemonNames]);
 
   useEffect(() => {

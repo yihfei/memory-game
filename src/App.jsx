@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Card from './components/Card';
+import HelpButton from './components/HelpButton';
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
       <header>
         <h2>best score: {bestScore}</h2>
         <h2>current score: {currentScore}</h2>
+        <HelpButton/>
       </header>
       <div className="cards">
         {randomCards.length > 0 ? randomCards : <p>Loading cards...</p>}

@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 
-const Card = ({ name, onChange, onError }) => {
+const Card = ({ name, onChange, onError,  }) => {
     const [pokemon, setPokemon] = useState(null);
+    const [isFlipped, setIsFlipped] = useState(true);
+    const [imgURL, setImgURL] = useState('');
 
+    
     useEffect(() => {
         const fetchData = async() => {
             try {
@@ -13,24 +16,32 @@ const Card = ({ name, onChange, onError }) => {
                 }
                 const data = await response.json();
                 setPokemon(data);
+                setImgURL(data.sprites.other['official-artwork'].front_default);
+                setIsFlipped(false);
             } catch (error) {
                 console.log(error);
                 onError(name); 
             }
         }
         fetchData();
-    }, [name]);
+    }, []);
 
-    if (!pokemon) {
-        return (<div>pokemon not available</div>);
-    }
+    
 
-    const imgURL = pokemon.sprites.other['official-artwork'].front_default;
 
     return (
-        <div className="card" onClick={() => onChange(name)}>
-            <h2>{name}</h2>
-            <img src={imgURL} alt="" />
+        <div className={`card ${isFlipped ? 'flipped' : ''}`} onClick={() => {onChange(name)}}>
+            <div className="card-front">
+                {pokemon && (
+                    <>
+                        <h2>{name}</h2>
+                        <img src={imgURL} alt={name} />
+                    </>
+                )}
+            </div>
+            <div className="card-back">
+                <img src='src/assets/cardback.webp' />
+            </div>
         </div>
     )
 

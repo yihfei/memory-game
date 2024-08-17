@@ -17,7 +17,6 @@ header {
   grid-template-columns: 100px 1fr;
   grid-template-rows: 1fr 1fr;
   justify-items: end;
-
 }
 
 .overlay {
@@ -57,6 +56,7 @@ header {
 .card { 
   height: 90%;
   width: 85%; 
+  
   position: relative;
   transform-style: preserve-3d;
   perspective: 1000px;
@@ -90,8 +90,6 @@ header {
 }
 
 .card img {
-  max-height: 80%;
-  max-width: 80%;
   object-fit: cover;
   
 }
@@ -124,7 +122,7 @@ header {
 
   .cards {
     width: 100vw;
-    height: 70vh;
+    height: 80vh;
     grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr)); /* Adjust for smaller screens */
     justify-items: center;
     align-items: baseline;

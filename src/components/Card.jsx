@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import back from '../assets/cardback.webp'
 
 const Card = ({ name, onChange, onError }) => {
     const [pokemon, setPokemon] = useState(null);
@@ -41,7 +42,7 @@ const Card = ({ name, onChange, onError }) => {
                 )}
             </div>
             <div className="card-back">
-                <img src='public/cardback.webp' />
+                <img src={back} />
             </div>
         </div>
     )

@@ -41,7 +41,7 @@ const Card = ({ name, onChange, onError }) => {
                 )}
             </div>
             <div className="card-back">
-                <img src='src/assets/cardback.webp' />
+                <img src='public/cardback.webp' />
             </div>
         </div>
     )

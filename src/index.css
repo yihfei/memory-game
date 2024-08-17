@@ -34,6 +34,7 @@ header {
   background-color: rgba(224, 224, 224, 0.808);
   font-size: 2rem;
   gap: 30px;
+  z-index: 2;
 }
 
 .overlay button {

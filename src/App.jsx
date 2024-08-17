@@ -12,7 +12,10 @@ function App() {
   const [bestScore, setBestScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(-1);
 
+
+
   useEffect(() => {
+    setPokemonCards([])
     const fetchPokemonList = async () => {
       try {
         const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=30');
@@ -24,13 +27,14 @@ function App() {
 
           setPokemonNames(names);
           
+          
       } catch (error) {
         console.log(error);
       } 
     };
     fetchPokemonList();
     
-  }, [])
+  }, [selectedNames])
 
   useEffect(() => {
     let cards = pokemonNames.map(name => (
@@ -65,6 +69,7 @@ function App() {
 
   const onChange = (name) => {
     setSelectedNames(prevSelectedNames => [...prevSelectedNames, name]);
+    
   }
 
   const randomCards = getRandomPokemonCards(pokemonCards, 10);

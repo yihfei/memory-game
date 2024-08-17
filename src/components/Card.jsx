@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 
-const Card = ({ name, onChange, onError,  }) => {
+const Card = ({ name, onChange, onError }) => {
     const [pokemon, setPokemon] = useState(null);
     const [isFlipped, setIsFlipped] = useState(true);
     const [imgURL, setImgURL] = useState('');
 
     
     useEffect(() => {
+        setIsFlipped(true);
         const fetchData = async() => {
             try {
                 const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
@@ -30,7 +31,7 @@ const Card = ({ name, onChange, onError,  }) => {
 
 
     return (
-        <div className={`card ${isFlipped ? 'flipped' : ''}`} onClick={() => {onChange(name)}}>
+        <div className={`card ${isFlipped ? 'flipped' : ''}`} onClick={() => {onChange(name); setIsFlipped(true);}}>
             <div className="card-front">
                 {pokemon && (
                     <>
